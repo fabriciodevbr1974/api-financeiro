@@ -7,14 +7,8 @@ import java.util.List;
 
 public interface CaixaRepository {
   Caixa insert(Caixa caixa);
-
   Caixa findById(Long id);
-
   Caixa update(Caixa caixa);
-
-
-
   List<Caixa> findByData(LocalDate data);
-
   void delete(Long id);
 }
