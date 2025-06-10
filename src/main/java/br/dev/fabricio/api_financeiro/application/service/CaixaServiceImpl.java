@@ -16,9 +16,7 @@ public class CaixaServiceImpl implements CaixaService {
   private final CaixaRepository caixaRepository;
 
   public CaixaServiceImpl(CaixaRepository caixaRepository){
-
     this.caixaRepository = caixaRepository;
-
   }
 
   @Override

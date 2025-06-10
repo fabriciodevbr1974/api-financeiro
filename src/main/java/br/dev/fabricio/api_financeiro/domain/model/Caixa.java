@@ -13,6 +13,8 @@ public class Caixa {
   private BigDecimal valor;
   private String tipo;//Entrada ou Saída
 
+  public Caixa(){}
+
   public Caixa(CaixaRequestDto caixaRequestDto) {
     this.id = null;
     this.data = caixaRequestDto.getData() == null ? LocalDate.now() : caixaRequestDto.getData();
