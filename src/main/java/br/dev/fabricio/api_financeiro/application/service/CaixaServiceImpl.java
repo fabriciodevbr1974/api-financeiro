@@ -3,8 +3,8 @@ package br.dev.fabricio.api_financeiro.application.service;
 import br.dev.fabricio.api_financeiro.domain.dto.CaixaRequestDto;
 import br.dev.fabricio.api_financeiro.domain.dto.CaixaResponseDto;
 import br.dev.fabricio.api_financeiro.domain.model.Caixa;
-import br.dev.fabricio.api_financeiro.domain.port.in.CaixaService;
-import br.dev.fabricio.api_financeiro.domain.port.out.CaixaRepository;
+import br.dev.fabricio.api_financeiro.domain.port.in.CaixaServicePortIn;
+import br.dev.fabricio.api_financeiro.domain.port.out.CaixaRepositoryPortOut;
 import br.dev.fabricio.api_financeiro.exceptions.LancamentoNaoEncontradoException;
 
 import java.math.BigDecimal;
@@ -12,13 +12,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CaixaServiceImpl implements CaixaService {
+public class CaixaServiceImpl implements CaixaServicePortIn {
 
   private static final String LANCAMENTO_NAO_ENCONTRADO = "Lançamento não encontrado";
 
-  private final CaixaRepository caixaRepository;
+  private final CaixaRepositoryPortOut caixaRepository;
 
-  public CaixaServiceImpl(CaixaRepository caixaRepository){
+  public CaixaServiceImpl(CaixaRepositoryPortOut caixaRepository){
     this.caixaRepository = caixaRepository;
   }
 

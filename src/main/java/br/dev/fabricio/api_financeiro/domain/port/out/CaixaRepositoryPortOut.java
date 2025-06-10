@@ -5,7 +5,7 @@ import br.dev.fabricio.api_financeiro.domain.model.Caixa;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface CaixaRepository {
+public interface CaixaRepositoryPortOut {
   Caixa insert(Caixa caixa);
   Caixa findById(Long id);
   Caixa update(Caixa caixa);

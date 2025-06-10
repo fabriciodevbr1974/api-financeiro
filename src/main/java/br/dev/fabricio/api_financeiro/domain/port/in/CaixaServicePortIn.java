@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface CaixaService {
+public interface CaixaServicePortIn {
 
   CaixaResponseDto insert(CaixaRequestDto caixaRequestDto);
   CaixaResponseDto update(Long id, CaixaRequestDto caixaRequestDto);

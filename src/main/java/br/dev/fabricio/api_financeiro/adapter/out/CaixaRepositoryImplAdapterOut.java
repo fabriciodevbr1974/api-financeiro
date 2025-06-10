@@ -1,7 +1,7 @@
 package br.dev.fabricio.api_financeiro.adapter.out;
 
 import br.dev.fabricio.api_financeiro.domain.model.Caixa;
-import br.dev.fabricio.api_financeiro.domain.port.out.CaixaRepository;
+import br.dev.fabricio.api_financeiro.domain.port.out.CaixaRepositoryPortOut;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CaixaRepositoryImpl implements CaixaRepository {
+public class CaixaRepositoryImplAdapterOut implements CaixaRepositoryPortOut {
 
   private static List<Caixa> repositorio = new ArrayList<>();
   private static Long proximoId = 0L;

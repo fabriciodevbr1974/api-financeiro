@@ -2,7 +2,7 @@ package br.dev.fabricio.api_financeiro.adapter.in;
 
 import br.dev.fabricio.api_financeiro.domain.dto.CaixaRequestDto;
 import br.dev.fabricio.api_financeiro.domain.dto.CaixaResponseDto;
-import br.dev.fabricio.api_financeiro.domain.port.in.CaixaService;
+import br.dev.fabricio.api_financeiro.domain.port.in.CaixaServicePortIn;
 import br.dev.fabricio.api_financeiro.exceptions.LancamentoNaoEncontradoException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api-financeiro")
-public class CaixaController {
+public class CaixaControllerAdapterIn {
 
-  private final CaixaService caixaService;
+  private final CaixaServicePortIn caixaService;
 
 
-  public CaixaController(CaixaService caixaService) {
+  public CaixaControllerAdapterIn(CaixaServicePortIn caixaService) {
     this.caixaService = caixaService;
   }
 
