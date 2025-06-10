@@ -24,11 +24,7 @@ public class CaixaServiceImpl implements CaixaService {
   @Override
   public CaixaResponseDto insert(CaixaRequestDto caixaRequestDto) {
 
-    Caixa caixa = new Caixa();
-    caixa.setData(caixaRequestDto.getData() == null ? LocalDate.now() : caixaRequestDto.getData());
-    caixa.setDescricao(caixaRequestDto.getDescricao());
-    caixa.setValor(caixaRequestDto.getValor() == null ? BigDecimal.ZERO : caixaRequestDto.getValor());
-    caixa.setTipo(caixaRequestDto.getTipo());
+    Caixa caixa = new Caixa(caixaRequestDto);
 
     caixa = caixaRepository.insert(caixa);
 
