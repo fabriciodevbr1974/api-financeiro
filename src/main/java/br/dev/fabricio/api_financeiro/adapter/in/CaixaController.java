@@ -3,6 +3,7 @@ package br.dev.fabricio.api_financeiro.adapter.in;
 import br.dev.fabricio.api_financeiro.domain.dto.CaixaRequestDto;
 import br.dev.fabricio.api_financeiro.domain.dto.CaixaResponseDto;
 import br.dev.fabricio.api_financeiro.domain.port.in.CaixaService;
+import br.dev.fabricio.api_financeiro.exceptions.LancamentoNaoEncontradoException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,48 +23,58 @@ public class CaixaController {
   }
 
   @PostMapping
-  public ResponseEntity<?> insert(@RequestBody CaixaRequestDto request){
+  public ResponseEntity<?> insert(@RequestBody CaixaRequestDto request) {
     CaixaResponseDto response = caixaService.insert(request);
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> findById(@PathVariable Long id){
+  public ResponseEntity<?> findById(@PathVariable Long id) {
+
+
     CaixaResponseDto response = caixaService.findById(id);
-    if(response == null){
+    if (response == null) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(response);
+
+
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CaixaRequestDto request){
+  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CaixaRequestDto request) {
     CaixaResponseDto response = caixaService.update(id, request);
-    if(response == null){
+    if (response == null) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> delete(@PathVariable Long id){
-    caixaService.delete(id);
-    return ResponseEntity.noContent().build();
+  public ResponseEntity<?> delete(@PathVariable Long id) {
+
+    try {
+      caixaService.delete(id);
+      return ResponseEntity.noContent().build();
+
+    } catch (LancamentoNaoEncontradoException e) {
+      return ResponseEntity.notFound().build();
+    }
+
   }
 
 
   @GetMapping()
-  public ResponseEntity<?> findByData(@RequestParam LocalDate data){
-    List<CaixaResponseDto>  response = caixaService.findByData(data);
+  public ResponseEntity<?> findByData(@RequestParam LocalDate data) {
+    List<CaixaResponseDto> response = caixaService.findByData(data);
     return ResponseEntity.ok(response);
   }
 
   @GetMapping("/saldo")
-  public ResponseEntity<?> getSaldo(@RequestParam LocalDate data){
+  public ResponseEntity<?> getSaldo(@RequestParam LocalDate data) {
     BigDecimal response = caixaService.getSaldo(data);
     return ResponseEntity.ok(response);
   }
-
 
 
 }

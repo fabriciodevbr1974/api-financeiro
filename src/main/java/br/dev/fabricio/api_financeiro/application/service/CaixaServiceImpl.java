@@ -5,12 +5,12 @@ import br.dev.fabricio.api_financeiro.domain.dto.CaixaResponseDto;
 import br.dev.fabricio.api_financeiro.domain.model.Caixa;
 import br.dev.fabricio.api_financeiro.domain.port.in.CaixaService;
 import br.dev.fabricio.api_financeiro.domain.port.out.CaixaRepository;
+import br.dev.fabricio.api_financeiro.exceptions.LancamentoNaoEncontradoException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class CaixaServiceImpl implements CaixaService {
 
@@ -34,11 +34,13 @@ public class CaixaServiceImpl implements CaixaService {
   @Override
   public CaixaResponseDto update(Long id, CaixaRequestDto caixaRequestDto) {
 
-    if(id == null || id < 1){
+    Caixa caixa = caixaRepository.findById(id);
+
+    if(caixa == null){
       return null;
     }
 
-    Caixa caixa = caixaRepository.findById(id);
+
     caixa.setData(caixaRequestDto.getData() == null ? LocalDate.now() : caixaRequestDto.getData());
     caixa.setDescricao(caixaRequestDto.getDescricao());
     caixa.setValor(caixaRequestDto.getValor() == null ? BigDecimal.ZERO : caixaRequestDto.getValor());
@@ -51,6 +53,12 @@ public class CaixaServiceImpl implements CaixaService {
 
   @Override
   public void delete(Long id) {
+    Caixa caixa = caixaRepository.findById(id);
+
+    if(caixa == null){
+      throw new LancamentoNaoEncontradoException("Lançamento não localizado");
+    }
+
     caixaRepository.delete(id);
   }
 
