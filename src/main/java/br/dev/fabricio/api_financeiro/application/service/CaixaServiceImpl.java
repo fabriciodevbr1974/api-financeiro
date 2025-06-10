@@ -8,6 +8,7 @@ import br.dev.fabricio.api_financeiro.domain.port.out.CaixaRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CaixaServiceImpl implements CaixaService {
@@ -43,21 +44,64 @@ public class CaixaServiceImpl implements CaixaService {
 
   @Override
   public CaixaResponseDto update(Long id, CaixaRequestDto caixaRequestDto) {
-    return null;
+
+    Caixa caixa = caixaRepository.findById(id);
+    caixa.setData(caixaRequestDto.getData() == null ? LocalDate.now() : caixaRequestDto.getData());
+    caixa.setDescricao(caixaRequestDto.getDescricao());
+    caixa.setValor(caixaRequestDto.getValor() == null ? BigDecimal.ZERO : caixaRequestDto.getValor());
+    caixa.setTipo(caixaRequestDto.getTipo());
+
+    caixa = caixaRepository.update(caixa);
+
+    CaixaResponseDto caixaResponseDto = new CaixaResponseDto();
+    caixaResponseDto.setId(caixa.getId());
+    caixaResponseDto.setDescricao(caixa.getDescricao());
+    caixaResponseDto.setData(caixa.getData());
+    caixaResponseDto.setValor(caixa.getValor());
+    caixaResponseDto.setTipo(caixa.getTipo());
+
+    return caixaResponseDto;
   }
 
   @Override
   public void delete(Long id) {
-
+    caixaRepository.update(id);
   }
 
   @Override
   public CaixaResponseDto findById(Long id) {
-    return null;
+    Caixa caixa = caixaRepository.findById(id);
+
+    CaixaResponseDto caixaResponseDto = new CaixaResponseDto();
+    caixaResponseDto.setId(caixa.getId());
+    caixaResponseDto.setDescricao(caixa.getDescricao());
+    caixaResponseDto.setData(caixa.getData());
+    caixaResponseDto.setValor(caixa.getValor());
+    caixaResponseDto.setTipo(caixa.getTipo());
+
+    return caixaResponseDto;
   }
 
   @Override
   public List<CaixaResponseDto> findByData(LocalDate data) {
-    return List.of();
+
+    List<CaixaResponseDto> list = new ArrayList<>();
+
+    List<Caixa> caixas = caixaRepository.findByData(data);
+
+    caixas.stream().forEach(caixa -> {
+
+      CaixaResponseDto caixaResponseDto = new CaixaResponseDto();
+      caixaResponseDto.setId(caixa.getId());
+      caixaResponseDto.setDescricao(caixa.getDescricao());
+      caixaResponseDto.setData(caixa.getData());
+      caixaResponseDto.setValor(caixa.getValor());
+      caixaResponseDto.setTipo(caixa.getTipo());
+
+      list.add(caixaResponseDto);
+
+    });
+
+    return list;
   }
 }
