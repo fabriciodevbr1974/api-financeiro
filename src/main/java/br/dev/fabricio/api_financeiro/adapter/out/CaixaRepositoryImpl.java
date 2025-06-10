@@ -2,44 +2,70 @@ package br.dev.fabricio.api_financeiro.adapter.out;
 
 import br.dev.fabricio.api_financeiro.domain.model.Caixa;
 import br.dev.fabricio.api_financeiro.domain.port.out.CaixaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CaixaRepositoryImpl implements CaixaRepository {
+
+  private static List<Caixa> repositorio = new ArrayList<>();
+  private static Long proximoId = 0L;
+
+
   @Override
   public Caixa insert(Caixa caixa) {
-
-    caixa.setId(1L);
-
+    proximoId++;
+    caixa.setId(proximoId);
+    repositorio.add(caixa);
     return caixa;
   }
 
   @Override
   public Caixa findById(Long id) {
 
-    Caixa caixa = new Caixa();
-    caixa.setId(1L);
-    caixa.setDescricao("Salário caiu na conta");
-    caixa.setTipo("E");
-    caixa.setData(LocalDate.now());
-    caixa.setValor(new BigDecimal(5000));
-    return caixa;
+
+    for (Caixa caixa : repositorio) {
+      if (caixa.getId().equals(id)) {
+        return caixa;
+      }
+    }
+    return null;
+
   }
 
   @Override
   public Caixa update(Caixa caixa) {
-    return null;
+
+    Caixa caixaCadastrado = findById(caixa.getId());
+
+    if (caixaCadastrado == null) {
+      return null;
+    }
+
+    caixaCadastrado.setValor(caixa.getValor());
+    caixaCadastrado.setDescricao(caixa.getDescricao());
+    caixaCadastrado.setData(caixa.getData());
+    caixaCadastrado.setTipo(caixa.getTipo());
+
+
+    return caixaCadastrado;
   }
 
-  @Override
-  public void update(Long id) {
-
-  }
 
   @Override
   public List<Caixa> findByData(LocalDate data) {
-    return List.of();
+
+    List<Caixa> list = new ArrayList<>();
+
+    for (Caixa caixa : repositorio) {
+      if (caixa.getData().equals(data)) {
+        list.add(caixa);
+      }
+    }
+
+    return list;
   }
 }

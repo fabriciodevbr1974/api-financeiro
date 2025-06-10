@@ -12,7 +12,7 @@ public interface CaixaRepository {
 
   Caixa update(Caixa caixa);
 
-  void update(Long id);
+
 
   List<Caixa> findByData(LocalDate data);
 }
