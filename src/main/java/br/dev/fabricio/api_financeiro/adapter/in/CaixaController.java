@@ -31,23 +31,25 @@ public class CaixaController {
   @GetMapping("/{id}")
   public ResponseEntity<?> findById(@PathVariable Long id) {
 
-
-    CaixaResponseDto response = caixaService.findById(id);
-    if (response == null) {
+    try{
+      CaixaResponseDto response = caixaService.findById(id);
+      return ResponseEntity.ok(response);
+    } catch (LancamentoNaoEncontradoException e){
       return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.ok(response);
-
 
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CaixaRequestDto request) {
-    CaixaResponseDto response = caixaService.update(id, request);
-    if (response == null) {
+
+    try{
+      CaixaResponseDto response = caixaService.update(id, request);
+      return ResponseEntity.ok(response);
+    } catch (LancamentoNaoEncontradoException e){
       return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.ok(response);
+
   }
 
   @DeleteMapping("/{id}")

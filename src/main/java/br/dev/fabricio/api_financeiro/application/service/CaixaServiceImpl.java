@@ -14,6 +14,8 @@ import java.util.List;
 
 public class CaixaServiceImpl implements CaixaService {
 
+  private static final String LANCAMENTO_NAO_ENCONTRADO = "Lançamento não encontrado";
+
   private final CaixaRepository caixaRepository;
 
   public CaixaServiceImpl(CaixaRepository caixaRepository){
@@ -37,7 +39,7 @@ public class CaixaServiceImpl implements CaixaService {
     Caixa caixa = caixaRepository.findById(id);
 
     if(caixa == null){
-      return null;
+      throw new LancamentoNaoEncontradoException(LANCAMENTO_NAO_ENCONTRADO);
     }
 
 
@@ -56,7 +58,7 @@ public class CaixaServiceImpl implements CaixaService {
     Caixa caixa = caixaRepository.findById(id);
 
     if(caixa == null){
-      throw new LancamentoNaoEncontradoException("Lançamento não localizado");
+      throw new LancamentoNaoEncontradoException(LANCAMENTO_NAO_ENCONTRADO);
     }
 
     caixaRepository.delete(id);
@@ -66,7 +68,7 @@ public class CaixaServiceImpl implements CaixaService {
   public CaixaResponseDto findById(Long id) {
     Caixa caixa = caixaRepository.findById(id);
     if(caixa == null){
-      return null;
+      throw new LancamentoNaoEncontradoException(LANCAMENTO_NAO_ENCONTRADO);
     }
 
     return new CaixaResponseDto(caixa);
