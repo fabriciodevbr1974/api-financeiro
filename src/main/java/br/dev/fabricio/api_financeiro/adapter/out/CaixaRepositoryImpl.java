@@ -68,4 +68,13 @@ public class CaixaRepositoryImpl implements CaixaRepository {
 
     return list;
   }
+
+  @Override
+  public void delete(Long id) {
+    Caixa caixa = findById(id);
+    if(caixa != null){
+      repositorio.remove(caixa);
+    }
+
+  }
 }

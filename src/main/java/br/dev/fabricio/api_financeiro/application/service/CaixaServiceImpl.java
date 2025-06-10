@@ -50,12 +50,15 @@ public class CaixaServiceImpl implements CaixaService {
 
   @Override
   public void delete(Long id) {
-    caixaRepository.update(id);
+    caixaRepository.delete(id);
   }
 
   @Override
   public CaixaResponseDto findById(Long id) {
     Caixa caixa = caixaRepository.findById(id);
+    if(caixa == null){
+      return null;
+    }
 
     CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
 

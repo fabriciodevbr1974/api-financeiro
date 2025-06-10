@@ -15,4 +15,6 @@ public interface CaixaRepository {
 
 
   List<Caixa> findByData(LocalDate data);
+
+  void delete(Long id);
 }
