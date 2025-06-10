@@ -6,6 +6,7 @@ import br.dev.fabricio.api_financeiro.domain.port.in.CaixaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -54,6 +55,12 @@ public class CaixaController {
   @GetMapping()
   public ResponseEntity<?> findByData(@RequestParam LocalDate data){
     List<CaixaResponseDto>  response = caixaService.findByData(data);
+    return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/saldo")
+  public ResponseEntity<?> getSaldo(@RequestParam LocalDate data){
+    BigDecimal response = caixaService.getSaldo(data);
     return ResponseEntity.ok(response);
   }
 

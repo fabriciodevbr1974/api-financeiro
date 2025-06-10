@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CaixaServiceImpl implements CaixaService {
 
@@ -75,5 +76,19 @@ public class CaixaServiceImpl implements CaixaService {
     });
 
     return list;
+  }
+
+  @Override
+  public BigDecimal getSaldo(LocalDate data) {
+
+    List<CaixaResponseDto> list = findByData(data);
+
+    BigDecimal somaValor = BigDecimal.ZERO;
+
+    for (CaixaResponseDto caixa : list) {
+      somaValor = somaValor.add(caixa.getTipo().equalsIgnoreCase("S") ? caixa.getValor().negate() : caixa.getValor());
+    }
+
+    return somaValor;
   }
 }
