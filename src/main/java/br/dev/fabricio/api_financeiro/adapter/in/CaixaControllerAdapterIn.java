@@ -4,6 +4,7 @@ import br.dev.fabricio.api_financeiro.domain.dto.CaixaRequestDto;
 import br.dev.fabricio.api_financeiro.domain.dto.CaixaResponseDto;
 import br.dev.fabricio.api_financeiro.domain.port.in.CaixaServicePortIn;
 import br.dev.fabricio.api_financeiro.exceptions.LancamentoNaoEncontradoException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,13 @@ public class CaixaControllerAdapterIn {
 
   @PostMapping
   public ResponseEntity<?> insert(@RequestBody CaixaRequestDto request) {
-    CaixaResponseDto response = caixaService.insert(request);
-    return ResponseEntity.ok(response);
+    try{
+      CaixaResponseDto response = caixaService.insert(request);
+      return ResponseEntity.ok(response);
+    } catch (Exception e){
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
+
   }
 
   @GetMapping("/{id}")
@@ -35,7 +41,9 @@ public class CaixaControllerAdapterIn {
       CaixaResponseDto response = caixaService.findById(id);
       return ResponseEntity.ok(response);
     } catch (LancamentoNaoEncontradoException e){
-      return ResponseEntity.notFound().build();
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    } catch (Exception e){
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
   }
@@ -47,7 +55,9 @@ public class CaixaControllerAdapterIn {
       CaixaResponseDto response = caixaService.update(id, request);
       return ResponseEntity.ok(response);
     } catch (LancamentoNaoEncontradoException e){
-      return ResponseEntity.notFound().build();
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    } catch (Exception e){
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
   }
@@ -60,7 +70,9 @@ public class CaixaControllerAdapterIn {
       return ResponseEntity.noContent().build();
 
     } catch (LancamentoNaoEncontradoException e) {
-      return ResponseEntity.notFound().build();
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    } catch (Exception e){
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
   }
@@ -68,14 +80,26 @@ public class CaixaControllerAdapterIn {
 
   @GetMapping()
   public ResponseEntity<?> findByData(@RequestParam LocalDate data) {
-    List<CaixaResponseDto> response = caixaService.findByData(data);
-    return ResponseEntity.ok(response);
+    try{
+      List<CaixaResponseDto> response = caixaService.findByData(data);
+      return ResponseEntity.ok(response);
+    } catch (Exception e){
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
   }
 
   @GetMapping("/saldo")
   public ResponseEntity<?> getSaldo(@RequestParam LocalDate data) {
-    BigDecimal response = caixaService.getSaldo(data);
-    return ResponseEntity.ok(response);
+
+    try{
+      BigDecimal response = caixaService.getSaldo(data);
+      return ResponseEntity.ok(response);
+
+    } catch (Exception e){
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
+
+
   }
 
 
