@@ -32,12 +32,7 @@ public class CaixaServiceImpl implements CaixaService {
 
     caixa = caixaRepository.insert(caixa);
 
-    CaixaResponseDto caixaResponseDto = new CaixaResponseDto();
-    caixaResponseDto.setId(caixa.getId());
-    caixaResponseDto.setDescricao(caixa.getDescricao());
-    caixaResponseDto.setData(caixa.getData());
-    caixaResponseDto.setValor(caixa.getValor());
-    caixaResponseDto.setTipo(caixa.getTipo());
+    CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
 
     return caixaResponseDto;
   }
@@ -53,12 +48,8 @@ public class CaixaServiceImpl implements CaixaService {
 
     caixa = caixaRepository.update(caixa);
 
-    CaixaResponseDto caixaResponseDto = new CaixaResponseDto();
-    caixaResponseDto.setId(caixa.getId());
-    caixaResponseDto.setDescricao(caixa.getDescricao());
-    caixaResponseDto.setData(caixa.getData());
-    caixaResponseDto.setValor(caixa.getValor());
-    caixaResponseDto.setTipo(caixa.getTipo());
+    CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
+
 
     return caixaResponseDto;
   }
@@ -72,12 +63,7 @@ public class CaixaServiceImpl implements CaixaService {
   public CaixaResponseDto findById(Long id) {
     Caixa caixa = caixaRepository.findById(id);
 
-    CaixaResponseDto caixaResponseDto = new CaixaResponseDto();
-    caixaResponseDto.setId(caixa.getId());
-    caixaResponseDto.setDescricao(caixa.getDescricao());
-    caixaResponseDto.setData(caixa.getData());
-    caixaResponseDto.setValor(caixa.getValor());
-    caixaResponseDto.setTipo(caixa.getTipo());
+    CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
 
     return caixaResponseDto;
   }
@@ -91,12 +77,7 @@ public class CaixaServiceImpl implements CaixaService {
 
     caixas.stream().forEach(caixa -> {
 
-      CaixaResponseDto caixaResponseDto = new CaixaResponseDto();
-      caixaResponseDto.setId(caixa.getId());
-      caixaResponseDto.setDescricao(caixa.getDescricao());
-      caixaResponseDto.setData(caixa.getData());
-      caixaResponseDto.setValor(caixa.getValor());
-      caixaResponseDto.setTipo(caixa.getTipo());
+      CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
 
       list.add(caixaResponseDto);
 
