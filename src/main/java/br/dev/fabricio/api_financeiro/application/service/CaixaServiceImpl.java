@@ -26,9 +26,8 @@ public class CaixaServiceImpl implements CaixaService {
 
     caixa = caixaRepository.insert(caixa);
 
-    CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
+    return new CaixaResponseDto(caixa);
 
-    return caixaResponseDto;
   }
 
   @Override
@@ -42,10 +41,7 @@ public class CaixaServiceImpl implements CaixaService {
 
     caixa = caixaRepository.update(caixa);
 
-    CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
-
-
-    return caixaResponseDto;
+    return new CaixaResponseDto(caixa);
   }
 
   @Override
@@ -60,9 +56,7 @@ public class CaixaServiceImpl implements CaixaService {
       return null;
     }
 
-    CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
-
-    return caixaResponseDto;
+    return new CaixaResponseDto(caixa);
   }
 
   @Override
@@ -72,7 +66,7 @@ public class CaixaServiceImpl implements CaixaService {
 
     List<Caixa> caixas = caixaRepository.findByData(data);
 
-    caixas.stream().forEach(caixa -> {
+    caixas.forEach(caixa -> {
 
       CaixaResponseDto caixaResponseDto = new CaixaResponseDto(caixa);
 

@@ -38,6 +38,9 @@ public class CaixaController {
   @PutMapping("/{id}")
   public ResponseEntity<?> update(@PathVariable Long id, @RequestBody CaixaRequestDto request){
     CaixaResponseDto response = caixaService.update(id, request);
+    if(response == null){
+      return ResponseEntity.notFound().build();
+    }
     return ResponseEntity.ok(response);
   }
 
