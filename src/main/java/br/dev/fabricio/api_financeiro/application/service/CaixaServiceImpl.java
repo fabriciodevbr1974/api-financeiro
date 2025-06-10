@@ -34,6 +34,10 @@ public class CaixaServiceImpl implements CaixaService {
   @Override
   public CaixaResponseDto update(Long id, CaixaRequestDto caixaRequestDto) {
 
+    if(id == null || id < 1){
+      return null;
+    }
+
     Caixa caixa = caixaRepository.findById(id);
     caixa.setData(caixaRequestDto.getData() == null ? LocalDate.now() : caixaRequestDto.getData());
     caixa.setDescricao(caixaRequestDto.getDescricao());
