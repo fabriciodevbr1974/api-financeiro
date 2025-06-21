@@ -1,6 +1,4 @@
-package br.dev.fabricio.api_financeiro.domain.dto;
-
-import br.dev.fabricio.api_financeiro.domain.model.Caixa;
+package br.dev.fabricio.api_financeiro.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,17 +9,7 @@ public class CaixaResponseDto {
   private String descricao;
   private LocalDate data;
   private BigDecimal valor;
-  private String tipo;//Entrada ou Saída
-
-  public CaixaResponseDto(Caixa caixa) {
-    this.id = caixa.getId();
-    this.descricao = caixa.getDescricao();
-    this.data = caixa.getData();
-    this.valor = caixa.getValor();
-    this.tipo = caixa.getTipo();
-  }
-
-
+  private String tipo; //Entrada ou Saída
 
   public Long getId() {
     return id;

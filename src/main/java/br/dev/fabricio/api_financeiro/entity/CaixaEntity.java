@@ -1,29 +1,21 @@
-package br.dev.fabricio.api_financeiro.domain.model;
+package br.dev.fabricio.api_financeiro.entity;
 
-import br.dev.fabricio.api_financeiro.domain.dto.CaixaRequestDto;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Caixa {
+@Entity
+@Table(name = "caixa")
+public class CaixaEntity {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String descricao;
   private LocalDate data;
   private BigDecimal valor;
-  private String tipo;//Entrada ou Saída
-
-  public Caixa(){}
-
-  public Caixa(CaixaRequestDto caixaRequestDto) {
-    this.id = null;
-    this.data = caixaRequestDto.getData() == null ? LocalDate.now() : caixaRequestDto.getData();
-    this.descricao = caixaRequestDto.getDescricao();
-    this.valor = caixaRequestDto.getValor() == null ? BigDecimal.ZERO : caixaRequestDto.getValor();
-    this.tipo = caixaRequestDto.getTipo();
-
-
-  }
+  private String tipo;
 
   public Long getId() {
     return id;
