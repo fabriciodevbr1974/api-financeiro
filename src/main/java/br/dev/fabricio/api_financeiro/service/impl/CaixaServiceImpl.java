@@ -7,6 +7,7 @@ import br.dev.fabricio.api_financeiro.repository.CaixaRepository;
 import br.dev.fabricio.api_financeiro.service.CaixaService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,5 +127,35 @@ public class CaixaServiceImpl implements CaixaService {
     });
 
     return response;
+  }
+
+  @Override
+  public BigDecimal valorTotal(LocalDate dataInicial, LocalDate dataFinal, String tipo) {
+
+    if(tipo.equalsIgnoreCase("E")){
+      return valorTotalEntrada(dataInicial, dataFinal);
+    }
+    return valorTotalSaida(dataInicial, dataFinal);
+  }
+
+  @Override
+  public BigDecimal valorTotalEntrada(LocalDate dataInicial, LocalDate dataFinal) {
+
+    return caixaRepository.somarValorPorIntervaloDeDatas(dataInicial, dataFinal, "E");
+
+  }
+
+  @Override
+  public BigDecimal valorTotalSaida(LocalDate dataInicial, LocalDate dataFinal) {
+    return caixaRepository.somarValorPorIntervaloDeDatas(dataInicial, dataFinal, "S");
+  }
+
+  @Override
+  public BigDecimal saldo(LocalDate dataInicial, LocalDate dataFinal) {
+
+    BigDecimal entradas = valorTotalEntrada(dataInicial, dataFinal);
+    BigDecimal saidas = valorTotalSaida(dataInicial, dataFinal);
+
+    return entradas.subtract(saidas);
   }
 }

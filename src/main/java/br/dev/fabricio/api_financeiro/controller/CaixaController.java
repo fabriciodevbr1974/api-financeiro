@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,12 @@ public class CaixaController {
   public ResponseEntity delete(@PathVariable Long id) {
     caixaService.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
+  @GetMapping("/saldo")
+  public ResponseEntity<BigDecimal> findById(@RequestParam LocalDate dataInicial, @RequestParam LocalDate dataFinal) {
+    BigDecimal saldo = caixaService.saldo(dataInicial, dataFinal);
+    return ResponseEntity.ok(saldo);
   }
 
 }
